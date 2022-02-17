@@ -5,5 +5,6 @@ urlpatterns = [
     path('music/', views.SongList.as_view()),
     path('music/<int:pk>/', views.SongDetail.as_view()),
     path('music/', views.SongForm.as_view()),
+    path('music/', views.UpdateSong.as_view()),
     # path('music/<int:pk>/likes/', views.SongLike.as_view())
 ]
