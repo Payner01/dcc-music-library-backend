@@ -29,7 +29,7 @@ class SongDetail(APIView):
         except Song.DoesNotExist:
             raise Http404
 
-    def get(self,pk):
+    def get(self,request,pk):
         song = self.get_object(pk)
         serializer = SongSerializer(song)
         return Response(serializer.data)
@@ -42,38 +42,8 @@ class SongDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, pk):
+    def delete(self, request, pk):
         song = self.get_object(pk)
         song.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-class SongForm(APIView):
-
-    def post(self, request):
-        serializer = SongSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class UpdateSong(APIView):
-
-    def put(self,request,pk):
-        song = self.get_object(pk)
-        serializer = SongSerializer(song, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-#     def get_object(self, pk):
-#         try:
-#             return Song.objects.get(pk=pk)
-#         except Song.DoesNotExist:
-#             raise Http404
-
-#     def put(self, pk):
-#         song = self.get_object(pk)
-#         song.likes + 1
-#         song.save()
-        
